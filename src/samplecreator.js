@@ -1,20 +1,17 @@
-CKE.define( function() {
+CKE.define( [ 'mvc/plugin' ], function( Plugin ) {
 	'use strict';
 
-	function create( editor ) {
-		console.log( 'create a sample UI for', editor );
-		editor.execute( 'example', 'foo' );
-	}
-
-	return {
+	return Plugin.extend( {
 		deps: [ 'example' ],
 
-		// injected on load
-		name: null,
-		path: null,
+		create: function() {
+			console.log( 'create a sample UI for', this.editor );
 
-		init: function( editor ) {
-			editor.addCreator( 'sample', create );
+			this.editor.execute( 'example', 'foo' );
+		},
+
+		init: function() {
+			this.editor.addCreator( 'sample', this );
 		}
-	};
+	} );
 } );
